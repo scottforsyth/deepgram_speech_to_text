@@ -139,6 +139,15 @@ class DeepgramLiveTranscriber {
     _isPaused = false;
   }
 
+  /// Send finalize.
+  void finalize() {
+    try {
+      _wsChannel.sink.add(jsonEncode({'type': 'Finalize'}));
+    } catch (e) {
+      print('Finalize error: $e');
+    }
+  }
+
   /// Handle incoming WebSocket messages based on their type.
   void _handleWebSocketMessage(dynamic event) {
     // Parse the event data as JSON.
